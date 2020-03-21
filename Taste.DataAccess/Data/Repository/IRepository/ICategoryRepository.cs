@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Taste.Models;
 using System.Collections.Generic;
-using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Taste.DataAccess.Data.Repository.IRepository
 {
-    interface ICategoryRepository
+    public interface ICategoryRepository : IRepository<Category>
     {
+        IEnumerable<SelectListItem> GetCategoryListForDropwdown();
+
+        void Update(Category category);
     }
 }
