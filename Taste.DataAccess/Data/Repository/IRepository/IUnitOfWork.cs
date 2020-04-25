@@ -12,6 +12,8 @@ namespace Taste.DataAccess.Data.Repository.IRepository
 
         IMenuItemRepository MenuItem { get; }
 
+        IApplicationUserRepository ApplicationUser { get; }
+
         void Save();
     }
 }
