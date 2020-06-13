@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Taste.DataAccess.Data.Repository.IRepository
 {
@@ -15,6 +13,10 @@ namespace Taste.DataAccess.Data.Repository.IRepository
         IApplicationUserRepository ApplicationUser { get; }
 
         IShoppingCartRepository ShoppingCart { get; }
+
+        IOrderDetailsRepository OrderDetails { get; }
+
+        IOrderHeaderRepository OrderHeader { get; }
 
         void Save();
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Taste.Models;
 
@@ -18,5 +15,7 @@ namespace Taste.DataAccess
         public DbSet<MenuItem> MenuItem { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
+        public DbSet<OrderHeader> OrderHeader { get; set; }
+        public DbSet<OrderDetails> OrderDetail { get; set; }
     }
 }
