@@ -19,9 +19,9 @@ namespace Taste.Utility
 
         public const string StatusSubmitted = "Submitted";
         
-        public const string StatusInProcess = "InProcess";
+        public const string StatusInProcess = "Being Prepared";
 
-        public const string StatusReady = "Ready";
+        public const string StatusReady = "Ready for Pickup";
 
         public const string StatusCompleted = "Completed";
 

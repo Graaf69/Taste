@@ -79,7 +79,6 @@ namespace Taste.Pages.Customer.Cart
             foreach (var item in detailCart.listCart)
             {
                 item.MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(m => m.Id == item.MenuItemId);
-
                 OrderDetails orderDetails = new OrderDetails
                 {
                     MenuItemId = item.MenuItemId,
@@ -89,23 +88,25 @@ namespace Taste.Pages.Customer.Cart
                     Price = item.MenuItem.Price,
                     Count = item.Count
                 };
-
                 detailCart.OrderHeader.OrderTotal += (orderDetails.Count * orderDetails.Price);
                 _unitOfWork.OrderDetails.Add(orderDetails);
-            }
 
+            }
+            detailCart.OrderHeader.OrderTotal = Convert.ToDouble(String.Format("{0:.##}", detailCart.OrderHeader.OrderTotal));
             _unitOfWork.ShoppingCart.RemoveRange(detailCart.listCart);
             HttpContext.Session.SetInt32(SD.ShoppingCart, 0);
             _unitOfWork.Save();
 
             if (stripeToken != null)
             {
+
                 var options = new ChargeCreateOptions
                 {
+                    //Amount is in cents
                     Amount = Convert.ToInt32(detailCart.OrderHeader.OrderTotal * 100),
                     Currency = "usd",
-                    Source = stripeToken,
                     Description = "Order ID : " + detailCart.OrderHeader.Id,
+                    Source = stripeToken
                 };
                 var service = new ChargeService();
                 Charge charge = service.Create(options);
@@ -114,6 +115,7 @@ namespace Taste.Pages.Customer.Cart
 
                 if (charge.Status.ToLower() == "succeeded")
                 {
+                    //email 
                     detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
                     detailCart.OrderHeader.Status = SD.StatusSubmitted;
                 }
@@ -129,6 +131,7 @@ namespace Taste.Pages.Customer.Cart
             _unitOfWork.Save();
 
             return RedirectToPage("/Customer/Cart/OrderConfirmation", new { id = detailCart.OrderHeader.Id });
+
         }
     }
 }

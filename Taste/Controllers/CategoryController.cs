@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Taste.DataAccess.Data.Repository.IRepository;
 using Taste.Utility;
+using Taste.Models;
 
 namespace Taste.Controllers
 {
@@ -20,6 +21,7 @@ namespace Taste.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            //return Json(new {data = _unitOfWork.SP_Call.ReturnList<Category>("usp_GetAllCategory", null) });
             return Json(new { data = _unitOfWork.Category.GetAll() });
         }
 

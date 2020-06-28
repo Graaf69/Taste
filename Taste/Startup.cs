@@ -52,8 +52,10 @@ namespace Taste
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
-            services.AddMvc(options => options.EnableEndpointRouting = false)
-                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+            //services.AddMvc(options => options.EnableEndpointRouting = false)
+            //    .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+
+            services.AddRazorPages();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
@@ -66,6 +68,11 @@ namespace Taste
 
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 
+            });
+
+            services.AddAuthentication().AddFacebook(facebookOptions => {
+                facebookOptions.AppId = "2332507280389000";
+                facebookOptions.AppSecret = "5ec3c1454ad4e20b80ae67951ca50470";
             });
         }
 
@@ -88,10 +95,16 @@ namespace Taste
             app.UseStaticFiles();
             app.UseSession();
 
+
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseMvc();
+            app.UseEndpoints(endPoints => {
+                endPoints.MapControllers();
+                endPoints.MapRazorPages();
+            });
+            //app.UseMvc();
 
             StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
         }
